@@ -1,97 +1,273 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 📚 Faculty Leave Management System (FLMS)
 
-# Getting Started
+A modern **Faculty Leave Management System** developed using the **MERN Stack** and **React Native** to simplify and digitize the leave approval process in educational institutions.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+The system supports three different user roles:
 
-## Step 1: Start Metro
+- 👨‍🏫 Faculty
+- 👨‍💼 Head of Department (HOD)
+- 🎓 Dean
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Each role has its own dashboard, permissions, and workflow.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+---
 
-```sh
-# Using npm
-npm start
+# ✨ Features
 
-# OR using Yarn
-yarn start
+## 👨‍🏫 Faculty
+
+- Secure Login
+- Apply Leave
+- View Leave History
+- Track Leave Status
+- Real-time Leave Approval Updates
+- User Profile
+
+---
+
+## 👨‍💼 HOD
+
+- Professional Dashboard
+- View Pending Leave Requests
+- Faculty Details
+- Approve/Reject Leave Requests
+- View Faculty Information
+- Profile Management
+
+---
+
+## 🎓 Dean
+
+- Dashboard
+- Review HOD Approved Leaves
+- Final Leave Approval
+- Reject Leave Requests
+- Leave Request Management
+- Profile Management
+
+---
+
+# 🚀 Tech Stack
+
+## Frontend (Mobile)
+
+- React Native
+- TypeScript
+- Redux Toolkit
+- React Navigation
+- Axios
+
+---
+
+## Backend
+
+- Node.js
+- Express.js
+
+---
+
+## Database
+
+- MongoDB
+- Mongoose
+
+---
+
+## Authentication
+
+- JWT Authentication
+- Protected Routes
+- Role-Based Access Control
+
+---
+
+# 📱 Screens
+
+## Faculty
+
+- Login
+- Dashboard
+- Apply Leave
+- Leave History
+- Profile
+
+---
+
+## HOD
+
+- Dashboard
+- Leave Requests
+- Faculty Details
+- Profile
+
+---
+
+## Dean
+
+- Dashboard
+- Leave Requests
+- Faculty Details
+- Profile
+
+---
+
+# 📂 Project Structure
+
+```
+FacultyLeaveMS
+│
+├── backend
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── utils
+│   └── server.js
+│
+├── mobile
+│   ├── api
+│   ├── components
+│   ├── navigation
+│   ├── redux
+│   ├── screens
+│   ├── services
+│   ├── theme
+│   └── App.tsx
+│
+└── README.md
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+# 🔄 Leave Approval Workflow
 
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```
+Faculty
+     │
+     ▼
+Apply Leave
+     │
+     ▼
+Head of Department (HOD)
+     │
+Approve / Reject
+     │
+     ▼
+Dean
+     │
+Approve / Reject
+     │
+     ▼
+Faculty receives final leave status
 ```
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+# 🔐 User Roles
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+| Role | Permissions |
+|------|-------------|
+| Faculty | Apply Leave, View History |
+| HOD | Approve/Reject Faculty Leaves |
+| Dean | Final Approval/Rejection |
 
-```sh
-bundle install
+---
+
+# ⚙️ Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Kunwar-Nikhil/FacultyLeaveMS.git
 ```
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
+## Backend
+
+```bash
+cd backend
+npm install
+npm run dev
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+---
 
-```sh
-# Using npm
-npm run ios
+## Mobile App
 
-# OR using Yarn
-yarn ios
+```bash
+cd FacultyLeaveMS81
+npm install
+npx react-native run-android
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+---
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+# 🌟 Key Features
 
-## Step 3: Modify your app
+- Role-Based Authentication
+- JWT Authorization
+- Leave Approval Workflow
+- Responsive UI
+- Professional Dashboard
+- Empty State Screens
+- Pull To Refresh
+- Modern Card UI
+- Reusable Components
+- REST APIs
+- MongoDB Integration
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+# 📸 Application Preview
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### Faculty
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- Dashboard
+- Apply Leave
+- Leave History
+- Profile
 
-## Congratulations! :tada:
+### HOD
 
-You've successfully run and modified your React Native App. :partying_face:
+- Dashboard
+- Leave Requests
+- Faculty Details
+- Profile
 
-### Now what?
+### Dean
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- Dashboard
+- Leave Requests
+- Faculty Details
+- Profile
 
-# Troubleshooting
+---
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+# 📈 Future Enhancements
 
-# Learn More
+- Push Notifications
+- Email Notifications
+- Dashboard Analytics
+- Leave Calendar
+- PDF Reports
+- Admin Panel
+- Attendance Integration
+- Dark Mode
+- Search & Filter
+- Leave Statistics
 
-To learn more about React Native, take a look at the following resources:
+---
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# 👨‍💻 Developed By
+
+**Bhavya Bhardwaj**
+
+B.Tech Computer Science Engineering
+
+---
+
+# ⭐ Support
+
+If you found this project useful, don't forget to **Star ⭐ the repository**.
