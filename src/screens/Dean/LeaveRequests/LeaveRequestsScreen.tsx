@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   FlatList,
+  View,
   Text,
   StyleSheet,
-  View,
+  RefreshControl,
 } from "react-native";
 
-import { getMyLeaves } from "../../../api/leave.api";
-import LeaveCard from "./components/LeaveCard";
-import { colors, spacing, typography } from "../../../theme";
+import { getPendingleaves } from "../../../api/admin.api";
+import LeaveCard from "../../Dean/LeaveRequests/components/LeaveCard";
+import { colors } from "../../../theme";
 
-const LeaveHistoryScreen = () => {
+const LeaveRequestsScreen = () => {
   const [leaves, setLeaves] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +20,7 @@ const LeaveHistoryScreen = () => {
     try {
       setLoading(true);
 
-      const response = await getMyLeaves();
+      const response = await getPendingleaves();
 
       setLeaves(response.leaves || []);
     } catch (error) {
@@ -38,31 +39,31 @@ const LeaveHistoryScreen = () => {
       <FlatList
         data={leaves}
         keyExtractor={(item: any) => item._id}
-        refreshing={loading}
-        onRefresh={loadLeaves}
+        renderItem={({ item }) => (
+          <LeaveCard leave={item} />
+        )}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={loadLeaves}
+            tintColor={colors.primary}
+          />
+        }
         showsVerticalScrollIndicator={false}
         contentContainerStyle={
           leaves.length === 0
             ? styles.emptyContainer
             : styles.listContainer
         }
-        renderItem={({ item }: any) => (
-          <LeaveCard
-            leaveType={item.leaveType.name}
-            fromDate={new Date(item.fromDate).toLocaleDateString()}
-            toDate={new Date(item.toDate).toLocaleDateString()}
-            status={item.status}
-          />
-        )}
         ListHeaderComponent={
           leaves.length > 0 ? (
             <View style={styles.header}>
               <Text style={styles.heading}>
-                Leave History
+                Leave Requests
               </Text>
 
               <Text style={styles.subHeading}>
-                View all your leave applications.
+                Review and manage faculty leave requests.
               </Text>
             </View>
           ) : null
@@ -70,16 +71,14 @@ const LeaveHistoryScreen = () => {
         ListEmptyComponent={
           !loading ? (
             <View style={styles.emptyView}>
-              <Text style={styles.emptyIcon}>
-                📄
-              </Text>
+              <Text style={styles.emptyIcon}>📭</Text>
 
               <Text style={styles.emptyTitle}>
-                No Leave History
+                No Leave Requests
               </Text>
 
               <Text style={styles.emptySubTitle}>
-                You haven't applied for any leave yet.
+                There are currently no pending leave requests to review.
               </Text>
             </View>
           ) : null
@@ -89,7 +88,7 @@ const LeaveHistoryScreen = () => {
   );
 };
 
-export default LeaveHistoryScreen;
+export default LeaveRequestsScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#6B7280",
     textAlign: "center",
-    fontSize: 15,
     lineHeight: 24,
+    fontSize: 15,
   },
 });

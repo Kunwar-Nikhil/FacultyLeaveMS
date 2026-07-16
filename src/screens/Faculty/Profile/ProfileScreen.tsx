@@ -55,6 +55,27 @@ const ProfileScreen = () =>{
                 <InfoCard title="Phone" value={user?.phoneNo ?? ""}/>
                 <InfoCard title="Department" value={user?.department ?? ""}/>
                 <InfoCard title="Subjects" value={user?.subjects?.join(", ") ?? ""}/>
+               <Text
+  style={{
+    marginTop: 25,
+    textAlign: "center",
+    color: "#9CA3AF",
+    fontSize: 13,
+  }}
+>
+  Faculty Leave Management System
+</Text>
+
+<Text
+  style={{
+    textAlign: "center",
+    color: "#9CA3AF",
+    fontSize: 12,
+    marginTop: 4,
+  }}
+>
+  Version 1.0
+</Text>
                 <PrimaryButton title="Logout" onPress={handleLogout}/>
             </ScrollView>
         </SafeAreaView>

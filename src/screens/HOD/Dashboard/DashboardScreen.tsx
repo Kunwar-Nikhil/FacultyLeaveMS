@@ -1,104 +1,164 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
+  RefreshControl,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../../redux/store";
 import StatCard from "../../Faculty/Dashboard/components/StatCard";
 import QuickActionCard from "../../Faculty/Dashboard/components/QuickActionCard";
-import { colors, spacing } from "../../../theme";
-
+import { colors } from "../../../theme";
 const DashboardScreen = () => {
   const navigation = useNavigation<any>();
 
   const { user } = useSelector(
     (state: RootState) => state.auth
   );
+  const [refreshing, setRefreshing] = useState(false);
+
+const stats = {
+  pending: 0,
+  approved: 0,
+  rejected: 0,
+  faculty: 0,
+};
+
+const loadDashboard = async () => {
+  try {
+    setRefreshing(true);
+
+    // TODO:
+    // HOD Dashboard API call yahan aayegi
+
+  } catch (e) {
+    console.log(e);
+  } finally {
+    setRefreshing(false);
+  }
+};
+
+useFocusEffect(
+  useCallback(() => {
+    loadDashboard();
+  }, [])
+);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.content}
-      >
+    showsVerticalScrollIndicator={false}
+    contentContainerStyle={styles.content}
+    refreshControl={
+        <RefreshControl
+            refreshing={refreshing}
+            onRefresh={loadDashboard}
+            tintColor={colors.primary}
+        />
+    }
+>
         {/* Header */}
+<View style={styles.header}>
+  <View style={styles.headerLeft}>
+    <Text style={styles.greeting}>
+      Good Morning 👋
+    </Text>
 
-        <Text style={styles.greeting}>
-          Good Morning 👋
-        </Text>
+    <Text style={styles.name}>
+      {user?.fullName}
+    </Text>
 
-        <Text style={styles.name}>
-          {user?.fullName}
-        </Text>
+    <View style={styles.roleContainer}>
+      <Text style={styles.role}>
+        Head of Department
+      </Text>
+    </View>
+  </View>
 
-        {/* Profile Card */}
+  <View style={styles.avatar}>
+    <Text style={styles.avatarText}>
+      {user?.fullName?.charAt(0).toUpperCase()}
+    </Text>
+  </View>
+</View>
 
-        <View style={styles.profileCard}>
-          <View>
-            <Text style={styles.role}>
-              Head of Department
-            </Text>
+<View style={styles.profileCard}>
+  <Text style={styles.departmentLabel}>
+    Department
+  </Text>
 
-            <Text style={styles.department}>
-              {user?.department}
-            </Text>
-          </View>
+  <Text style={styles.department}>
+    {user?.department}
+  </Text>
 
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {user?.fullName?.charAt(0)}
-            </Text>
-          </View>
-        </View>
+  <Text style={styles.subtitle}>
+    Manage faculty leave requests efficiently.
+  </Text>
+</View>
+       
 
         {/* Statistics */}
 
         <Text style={styles.section}>
-          Dashboard Overview
-        </Text>
+  Department Overview
+</Text>
 
-        <View style={styles.row}>
-          <StatCard
-            title="Pending"
-            value="--"
-          />
+<View style={styles.row}>
+  <StatCard
+    title="Pending"
+    value={stats.pending}
+  />
 
-          <StatCard
-            title="Approved"
-            value="--"
-          />
-        </View>
+  <StatCard
+    title="Approved"
+    value={stats.approved}
+  />
+</View>
 
-        <View style={styles.row}>
-          <StatCard
-            title="Rejected"
-            value="--"
-          />
+<View style={styles.row}>
+  <StatCard
+    title="Rejected"
+    value={stats.rejected}
+  />
 
-          <StatCard
-            title="Faculty"
-            value="--"
-          />
-        </View>
+  <StatCard
+    title="Faculty"
+    value={stats.faculty}
+  />
+</View>
 
         {/* Actions */}
 
-        <Text style={styles.section}>
-          Quick Actions
-        </Text>
+       <Text style={styles.section}>
+  Quick Actions
+</Text>
 
-        <QuickActionCard
-          title="View Leave Requests"
-          onPress={() =>
-            navigation.navigate("Requests")
-          }
-        />
+<QuickActionCard
+  title="View Leave Requests"
+  onPress={() => navigation.navigate("Requests")}
+/>
+
+<Text style={styles.section}>
+  Recent Activity
+</Text>
+
+<View style={styles.activityCard}>
+  <Text style={styles.activityTitle}>
+    No recent activity
+  </Text>
+
+  <Text style={styles.activitySubTitle}>
+    Leave requests will appear here.
+  </Text>
+</View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -109,80 +169,167 @@ export default DashboardScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6F8FC",
+    backgroundColor: "#F5F7FB",
   },
 
   content: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
     paddingBottom: 40,
   },
 
+  /* ---------------- Header ---------------- */
+
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+
+  headerLeft: {
+    flex: 1,
+  },
+
   greeting: {
-    fontSize: 18,
-    color: "#64748B",
+    fontSize: 15,
+    color: "#6B7280",
+    fontWeight: "500",
   },
 
   name: {
     fontSize: 30,
     fontWeight: "700",
-    color: colors.primary,
-    marginBottom: 25,
+    color: "#111827",
+    marginTop: 2,
   },
 
-  profileCard: {
-    backgroundColor: colors.primary,
-    borderRadius: 18,
-    padding: 20,
-
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-
-    marginBottom: 30,
-
-    elevation: 4,
+  roleContainer: {
+    marginTop: 10,
+    backgroundColor: "#DBEAFE",
+    alignSelf: "flex-start",
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
 
   role: {
-    color: "#fff",
-    fontSize: 18,
+    color: "#2563EB",
+    fontSize: 13,
     fontWeight: "700",
-  },
-
-  department: {
-    color: "#E5E7EB",
-    marginTop: 6,
-    fontSize: 15,
   },
 
   avatar: {
-    width: 62,
-    height: 62,
-    borderRadius: 31,
-    backgroundColor: "#fff",
+    width: 65,
+    height: 65,
+    borderRadius: 32.5,
+    backgroundColor: colors.primary,
 
     justifyContent: "center",
     alignItems: "center",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+
+    elevation: 5,
   },
 
   avatarText: {
-    fontSize: 26,
+    color: "#fff",
+    fontSize: 28,
     fontWeight: "700",
-    color: colors.primary,
   },
 
-  section: {
-    marginBottom: 15,
+  /* ---------------- Department Card ---------------- */
+
+  profileCard: {
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    padding: 22,
+    marginBottom: 28,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+
+    elevation: 5,
+  },
+
+  departmentLabel: {
+    color: "#DBEAFE",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+
+  department: {
+    color: "#fff",
+    fontSize: 25,
+    fontWeight: "700",
+    marginTop: 5,
+  },
+
+  subtitle: {
+    color: "#E5E7EB",
+    fontSize: 14,
     marginTop: 10,
-    fontSize: 20,
+    lineHeight: 22,
+  },
+
+  /* ---------------- Section ---------------- */
+
+  section: {
+    fontSize: 21,
     fontWeight: "700",
     color: "#111827",
+    marginBottom: 15,
+    marginTop: 8,
   },
 
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 15,
-    marginBottom: 15,
+    gap: 14,
+    marginBottom: 16,
+  },
+
+  /* ---------------- Activity ---------------- */
+
+  activityCard: {
+    backgroundColor: "#fff",
+    borderRadius: 18,
+    padding: 20,
+    marginTop: 8,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+
+    elevation: 3,
+  },
+
+  activityTitle: {
+    fontSize: 17,
+    fontWeight: "700",
+    color: "#111827",
+  },
+
+  activitySubTitle: {
+    marginTop: 8,
+    color: "#6B7280",
+    fontSize: 14,
+    lineHeight: 20,
   },
 });

@@ -38,6 +38,7 @@ const ProfileScreen = () =>{
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={styles.profile}>
                     <View style={styles.avatar}>
+                        
                         <Text style={styles.avatarText}>
                             {
                                 user?.fullName?.charAt(0)
@@ -47,15 +48,22 @@ const ProfileScreen = () =>{
                     <Text style={styles.name}>
                         {user?.fullName}
                     </Text>
-                    <Text style={styles.role}>
-                        {user?.role}
-                    </Text>
+                   <View style={styles.roleBadge}>
+    <Text style={styles.role}>
+        {user?.role?.toUpperCase()}
+    </Text>
+</View>
                 </View>
                 <InfoCard title="Email" value={user?.email ?? ""}/>
                 <InfoCard title="Phone" value={user?.phoneNo ?? ""}/>
                 <InfoCard title="Department" value={user?.department ?? ""}/>
                 <InfoCard title="Subjects" value={user?.subjects?.join(", ") ?? ""}/>
-                <PrimaryButton title="Logout" onPress={handleLogout}/>
+                <View style={{ marginTop: 20 }}>
+    <PrimaryButton
+        title="Logout"
+        onPress={handleLogout}
+    />
+</View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -66,6 +74,19 @@ const styles = StyleSheet.create({
          flex:1,
     backgroundColor:colors.background,
     },
+    roleBadge: {
+  marginTop: 12,
+  backgroundColor: "#DBEAFE",
+  paddingHorizontal: 16,
+  paddingVertical: 6,
+  borderRadius: 20,
+},
+
+role: {
+  color: colors.primary,
+  fontSize: 13,
+  fontWeight: "700",
+},
     content:{
         padding:spacing.lg,
     paddingBottom:40,
@@ -75,28 +96,34 @@ const styles = StyleSheet.create({
         alignItems:"center",
         marginBottom:30,
     },
-    avatar:{
-        width:90,
-        height:90,
-        borderRadius:45,
-        backgroundColor:colors.primary,
-        justifyContent:"center",
-        alignItems:"center",
-    },
-    avatarText:{
-        color:colors.white,
-        fontSize:34,
-        fontWeight:"700",
-    },
-    name:{
-        marginTop:15,
-        fontSize:24,
-        fontWeight:"700",
-        color:colors.textPrimary,
-    },
-    role:{
-        color:colors.textSecondary,
-        marginTop:6,
-        fontSize:16,
-    },
+    avatar: {
+  width: 110,
+  height: 110,
+  borderRadius: 55,
+  backgroundColor: colors.primary,
+  justifyContent: "center",
+  alignItems: "center",
+
+  shadowColor: "#000",
+  shadowOpacity: 0.12,
+  shadowRadius: 8,
+  shadowOffset: {
+    width: 0,
+    height: 3,
+  },
+
+  elevation: 5,
+},
+    avatarText: {
+  color: "#fff",
+  fontSize: 42,
+  fontWeight: "700",
+},
+    name: {
+  marginTop: 18,
+  fontSize: 28,
+  fontWeight: "700",
+  color: "#111827",
+},
+   
 })

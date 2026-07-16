@@ -14,7 +14,7 @@ import {useDispatch} from "react-redux";
 import { loginSuccess,logout } from "../redux/slices/authSlice";
 import { getCurrentUser } from "../api/auth.api";
 import HODStackNavigator from "./HODStackNavigator";
-
+import DeanStackNavigator from "./DeanStackNavigator";
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
@@ -109,7 +109,7 @@ if (showSplash) {
         <Stack.Screen
     
   name="Dean"
-  component={DeanTabNavigator}
+  component={DeanStackNavigator}
 />
       )}
     </Stack.Navigator>

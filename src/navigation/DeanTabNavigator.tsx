@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import DashboardScreen from "../screens/Dean/Dashboard/DashboardScreen";
-import LeaveRequestsScreen from "../screens/HOD/LeaveRequests/LeaveRequestsScreen";
+
 import ApplyLeaveScreen from "../screens/Faculty/ApplyLeave/ApplyLeaveScreen";
 import LeaveHistoryScreen from "../screens/Faculty/LeaveHistory/LeaveHistoryScreen";
 import ProfileScreen from "../screens/Dean/Profile/ProfileScreen";
-
+import LeaveRequestsScreen from "../screens/Dean/LeaveRequests/LeaveRequestsScreen";
 import { colors } from "../theme";
 
 const Tab = createBottomTabNavigator();
@@ -51,6 +51,10 @@ const DeanTabNavigator = () => {
               iconName = "person";
               break;
 
+              case "LeaveRequests":
+  iconName = "document-text";
+  break;
+
             default:
               iconName = "ellipse";
           }
@@ -71,9 +75,12 @@ const DeanTabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Requests"
-        component={LeaveRequestsScreen}
-      />
+  name="LeaveRequests"
+  component={LeaveRequestsScreen}
+  options={{
+    title: "Requests",
+  }}
+/>
 
       <Tab.Screen
         name="Apply Leave"

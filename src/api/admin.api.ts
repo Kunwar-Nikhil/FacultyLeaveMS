@@ -6,7 +6,7 @@ export const getPendingleaves = async() =>{
     return response.data
 }
 
-export const updateleaveStatus = async (leaveId:string,
+export const updateLeaveStatus = async (leaveId:string,
     status: "approved" | "rejected",
 )=>{
     const response = await axiosInstance.put(`/leaves/${leaveId}/status`,
