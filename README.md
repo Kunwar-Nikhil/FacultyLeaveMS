@@ -262,7 +262,7 @@ npx react-native run-android
 
 # 👨‍💻 Developed By
 
-**Bhavya Bhardwaj**
+**Nikhil Raghav**
 
 B.Tech Computer Science Engineering
 
